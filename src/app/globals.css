@@ -9,10 +9,21 @@ input[type="password"] {
   @apply rounded-lg block w-full my-2;
 }
 
+input[type="email"]:disabled,
+input[type="text"]:disabled,
+input[type="password"]:disabled {
+  @apply border-gray-700 p-2 bg-gray-700;
+  @apply rounded-lg block w-full my-2;
+}
+
 button {
   @apply border border-gray-300 block w-full font-semibold rounded-full px-6 py-2;
 }
 button[type="submit"],
 .submit {
   @apply bg-primary border-0 text-light;
+}
+button[type="submit"]:disabled,
+.submit:disabled {
+  @apply bg-gray-900 border-0 text-gray-400 cursor-wait;
 }
