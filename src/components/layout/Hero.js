@@ -14,11 +14,11 @@ function Hero() {
           esencję sushi.
         </p>
         <div className="flex gap-2 text-sm">
-          <button className="flex gap-2 bg-primary uppercase text-light px-8 py-2 rounded-full items-center">
+          <button className="flex justify-center gap-2 bg-primary uppercase text-light px-8 py-2 rounded-full items-center">
             Zamów
             <Right />
           </button>
-          <button className="text-secondary font-semibold flex gap-2 px-8 py-2 rounded-full items-center">
+          <button className="justify-center text-secondary font-semibold flex gap-2 px-8 py-2 rounded-full items-center">
             Więcej
             <Right />
           </button>

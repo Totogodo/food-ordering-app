@@ -12,7 +12,11 @@ export default function LoginPage() {
     e.preventDefault();
     setLoginInProgress(true);
 
-    const result = await signIn("credentials", { email, password });
+    const result = await signIn("credentials", {
+      email,
+      password,
+      callbackUrl: "/",
+    });
 
     if (result.error) {
       // Handle errors, e.g., show an error message
@@ -50,7 +54,11 @@ export default function LoginPage() {
           Login
         </button>
         <div className="text-center text-lg text-secondary my-2">or</div>
-        <button className="flex items-center gap-4  justify-center">
+        <button
+          type="button"
+          onClick={() => signIn("google", { callbackUrl: "/" })}
+          className="flex items-center gap-4  justify-center"
+        >
           <img className="max-w-6" src="/google.png" alt="logo google" />
           Loging with Google
         </button>
