@@ -19,6 +19,7 @@ export default function ProfilePage() {
   const [postCode, setPostCode] = useState("");
   const [address, setAddress] = useState("");
   const [image, setImage] = useState("");
+  const [profileFetched, setProfileFetched] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -33,6 +34,7 @@ export default function ProfilePage() {
           setPostCode(data.postCode);
           setAddress(data.address);
           setIsAdmin(data.admin);
+          setProfileFetched(true);
         });
       });
     }
@@ -91,8 +93,8 @@ export default function ProfilePage() {
     }
   }
 
-  if (status === "loading") {
-    return "Loading...";
+  if (status === "loading" || !profileFetched) {
+    return <div className="text-center">"Loading..."</div>;
   }
   if (status === "unauthenticated") {
     return redirect("/login");
