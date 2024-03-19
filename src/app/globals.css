@@ -6,7 +6,7 @@ input[type="email"],
 input[type="tel"],
 input[type="text"],
 input[type="password"] {
-  @apply border border-gray-400 p-2 bg-gray-100;
+  @apply border border-gray-400 py-1 px-2 bg-gray-100;
   @apply rounded-lg block w-full my-2;
 }
 
@@ -14,12 +14,12 @@ input[type="email"]:disabled,
 input[type="tel"]:disabled,
 input[type="text"]:disabled,
 input[type="password"]:disabled {
-  @apply border-none p-2 bg-gray-100;
+  @apply border-none py-1 px-2 bg-gray-100;
   @apply rounded-lg block w-full my-2;
 }
 
 button {
-  @apply border border-gray-300 block w-full font-semibold rounded-full px-6 py-2;
+  @apply border border-gray-300 block w-full font-semibold rounded-full px-6 py-1.5;
 }
 button[type="submit"],
 .submit {
@@ -28,4 +28,12 @@ button[type="submit"],
 button[type="submit"]:disabled,
 .submit:disabled {
   @apply bg-gray-900 border-0 text-gray-400 cursor-wait;
+}
+
+div.tabs > * {
+  @apply border border-primary px-4 rounded-full bg-transparent text-primary;
+}
+
+div.tabs > *.active {
+  @apply border border-primary px-4 rounded-full bg-primary text-light;
 }

@@ -12,7 +12,8 @@ const UserSchema = new Schema(
     phone: { type: Number },
     postCode: { type: String },
     street: { type: String },
-    adress: { type: String },
+    address: { type: String },
+    admin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

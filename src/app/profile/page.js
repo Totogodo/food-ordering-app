@@ -1,6 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +10,7 @@ export default function ProfilePage() {
   const session = useSession();
   const { status } = session;
   //
+  const [isAdmin, setIsAdmin] = useState(false);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -22,6 +24,16 @@ export default function ProfilePage() {
       setUserName(session.data.user.name);
       setImage(session.data.user.image);
       setUserEmail(session.data.user.email);
+
+      fetch("/api/profile").then((response) => {
+        response.json().then((data) => {
+          setPhone(data.phone);
+          setStreet(data.street);
+          setPostCode(data.postCode);
+          setAddress(data.address);
+          setIsAdmin(data.admin);
+        });
+      });
     }
   }, [session, status]);
 
@@ -87,7 +99,18 @@ export default function ProfilePage() {
   //
   return (
     <section className="mt-8">
-      <h1 className="text-center text-4xl text-primary mb-4">Profile</h1>
+      <div className="tabs flex gap-4 mx-auto justify-center text-xl text-primary mb-4">
+        <Link className="active" href={"/profile"}>
+          Profile
+        </Link>
+        {isAdmin && (
+          <>
+            <Link href={"/categories"}>Categories</Link>
+            <Link href={"/menu-items"}>Menu Items</Link>
+            <Link href={"/users"}>Users</Link>
+          </>
+        )}
+      </div>
 
       <div className="max-w-sm mx-auto">
         <div className="flex gap-2">
@@ -134,11 +157,12 @@ export default function ProfilePage() {
               placeholder="Phone number"
               className="font-semibold text-gray-600"
               value={phone}
-              onChange={(ev) => setPhone(ev.target.key)}
+              onChange={(ev) => setPhone(ev.target.value)}
             />
             {/* Address below */}
             <div className="flex gap-2">
               <input
+                style={{ margin: "0" }}
                 type="text"
                 placeholder="City"
                 value={"Warszawa"}
@@ -146,12 +170,13 @@ export default function ProfilePage() {
                 disabled={true}
               />
               <input
+                style={{ margin: "0" }}
                 type="text"
                 placeholder="Postal code"
                 className="font-semibold text-gray-600"
                 value={postCode}
                 onChange={(ev) => {
-                  setPostCode(ev.target.key);
+                  setPostCode(ev.target.value);
                 }}
               />
             </div>
@@ -160,14 +185,14 @@ export default function ProfilePage() {
               placeholder="Street"
               className="font-semibold text-gray-600"
               value={street}
-              onChange={(ev) => setStreet(ev.target.key)}
+              onChange={(ev) => setStreet(ev.target.value)}
             />
             <input
               className="font-semibold text-gray-600"
               type="text"
               placeholder="Address"
               value={address}
-              onChange={(ev) => setAddress(ev.target.key)}
+              onChange={(ev) => setAddress(ev.target.value)}
             />
             <button type="submit">Save</button>
           </form>
