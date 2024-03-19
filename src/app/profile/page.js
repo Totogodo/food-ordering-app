@@ -5,6 +5,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import UserTabs from "@/components/layout/UserTabs";
 
 export default function ProfilePage() {
   const session = useSession();
@@ -99,19 +100,7 @@ export default function ProfilePage() {
   //
   return (
     <section className="mt-8">
-      <div className="tabs flex gap-4 mx-auto justify-center text-xl text-primary mb-4">
-        <Link className="active" href={"/profile"}>
-          Profile
-        </Link>
-        {isAdmin && (
-          <>
-            <Link href={"/categories"}>Categories</Link>
-            <Link href={"/menu-items"}>Menu Items</Link>
-            <Link href={"/users"}>Users</Link>
-          </>
-        )}
-      </div>
-
+      <UserTabs isAdmin={isAdmin} />
       <div className="max-w-sm mx-auto">
         <div className="flex gap-2">
           <div>
