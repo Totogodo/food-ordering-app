@@ -1,5 +1,4 @@
 const { Schema, models, model } = require("mongoose");
-const argon2 = require("argon2");
 
 const UserSchema = new Schema(
   {
@@ -9,6 +8,11 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    image: { type: String },
+    phone: { type: Number },
+    postCode: { type: String },
+    street: { type: String },
+    adress: { type: String },
   },
   { timestamps: true }
 );

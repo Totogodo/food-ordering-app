@@ -3,29 +3,78 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ProfilePage() {
   const session = useSession();
   const { status } = session;
+  //
   const [userName, setUserName] = useState("");
-  const [show, setShow] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [street, setStreet] = useState("");
+  const [postCode, setPostCode] = useState("");
+  const [address, setAddress] = useState("");
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     if (status === "authenticated") {
       setUserName(session.data.user.name);
+      setImage(session.data.user.image);
+      setUserEmail(session.data.user.email);
     }
   }, [session, status]);
 
   async function handleProfileUpdate(ev) {
     ev.preventDefault();
-    const response = await fetch("api/profile", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: userName }),
+
+    const savingPromise = new Promise(async (resolve, reject) => {
+      const response = await fetch("api/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: userName,
+          image,
+          phone,
+          postCode,
+          street,
+          address,
+        }),
+      });
+
+      response.ok ? resolve() : reject();
     });
 
-    if (response) {
-      setShow(true);
+    await toast.promise(savingPromise, {
+      loading: "Saving...",
+      success: "Data saved!",
+      error: "Error",
+    });
+  }
+
+  async function handleFileChange(ev) {
+    const files = ev.target.files;
+
+    if (files?.length === 1) {
+      const data = new FormData();
+      data.set("file", files[0]);
+
+      const uploadingPromise = new Promise(async (resolve, reject) => {
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: data,
+        });
+
+        response.ok ? resolve() : reject();
+        const link = await response.json();
+        setImage(link);
+      });
+
+      await toast.promise(uploadingPromise, {
+        loading: "Uploading...",
+        success: "Image uploaded!",
+        error: "Error",
+      });
     }
   }
 
@@ -36,35 +85,30 @@ export default function ProfilePage() {
     return redirect("/login");
   }
   //
-  console.log(session);
-  const userImage = session.data.user.image;
-  const userEmail = session.data.user.email;
   return (
     <section className="mt-8">
       <h1 className="text-center text-4xl text-primary mb-4">Profile</h1>
 
       <div className="max-w-sm mx-auto">
-        {show && (
-          <h1
-            onClick={() => setShow(false)}
-            className="hover:cursor-pointer text-center border border-cyan-900 rounded-lg p-1 bg-cyan-600 text-light shadow-md"
-          >
-            Profile Saved
-          </h1>
-        )}
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2">
           <div>
             <div>
-              <Image
-                className="rounded-full mx-auto"
-                src={userImage}
-                width={80}
-                height={80}
-                alt={"avatar"}
-              />
+              {image && (
+                <Image
+                  className="rounded-full mx-auto max-w-96 max-h-96 aspect-square object-cover"
+                  src={image}
+                  width={80}
+                  height={80}
+                  alt={"avatar"}
+                />
+              )}
 
               <label>
-                <input type="file" className="hidden" />
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
                 <span className="border-gray-300 text-center text-gray-700 border rounded-lg py-1 px-2 mt-2 block text-xs cursor-pointer">
                   Edit
                 </span>
@@ -84,6 +128,46 @@ export default function ProfilePage() {
               type="email"
               disabled={true}
               value={userEmail}
+            />
+            <input
+              type="tel"
+              placeholder="Phone number"
+              className="font-semibold text-gray-600"
+              value={phone}
+              onChange={(ev) => setPhone(ev.target.key)}
+            />
+            {/* Address below */}
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="City"
+                value={"Warszawa"}
+                className="font-semibold text-gray-600"
+                disabled={true}
+              />
+              <input
+                type="text"
+                placeholder="Postal code"
+                className="font-semibold text-gray-600"
+                value={postCode}
+                onChange={(ev) => {
+                  setPostCode(ev.target.key);
+                }}
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Street"
+              className="font-semibold text-gray-600"
+              value={street}
+              onChange={(ev) => setStreet(ev.target.key)}
+            />
+            <input
+              className="font-semibold text-gray-600"
+              type="text"
+              placeholder="Address"
+              value={address}
+              onChange={(ev) => setAddress(ev.target.key)}
             />
             <button type="submit">Save</button>
           </form>
