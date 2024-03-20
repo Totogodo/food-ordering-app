@@ -14,7 +14,7 @@ export default function Header() {
   //
   return (
     <header className="flex items-center justify-between">
-      <nav className="flex gap-8 text-secondary font-semibold items-center">
+      <nav className="flex gap-2 sm:gap-4 md:gap-8 text-secondary font-semibold items-center">
         <Link
           className="text-primary font-semibold text-2xl uppercase"
           href="/"
