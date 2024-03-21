@@ -18,6 +18,8 @@ export default function EditUserPage() {
   const [image, setImage] = useState("");
   const { id } = useParams();
 
+  const [admin, setAdmin] = useState(false);
+
   useEffect(() => {
     fetch("/api/users").then((res) => {
       res.json().then((users) => {
@@ -30,6 +32,7 @@ export default function EditUserPage() {
           setUserEmail(user?.email || "");
           setUserName(user?.name || "");
           setImage(user?.image || "");
+          setAdmin(user?.admin);
         } else {
           console.log("User not found");
         }
@@ -53,6 +56,7 @@ export default function EditUserPage() {
           postCode,
           street,
           address,
+          admin,
         }),
       });
 
@@ -96,7 +100,7 @@ export default function EditUserPage() {
     return "Loading user info...";
   }
 
-  if (!data.admin) {
+  if (!data?.admin) {
     return "Not an admin";
   }
 
@@ -142,6 +146,24 @@ export default function EditUserPage() {
             disabled={true}
             value={userEmail}
           />
+          {data.admin && (
+            <div>
+              <label
+                className="flex gap-1 items-center px-2 mb-1"
+                htmlFor="adminCb"
+              >
+                <input
+                  id="adminCb"
+                  type="checkbox"
+                  className=""
+                  value={1}
+                  checked={admin}
+                  onChange={(ev) => setAdmin(ev.target.checked)}
+                />
+                <span>Admin</span>
+              </label>
+            </div>
+          )}
           <input
             type="tel"
             placeholder="Phone number"

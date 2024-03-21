@@ -17,8 +17,8 @@ input[type="tel"]:disabled,
 input[type="text"]:disabled,
 input[type="number"]:disabled,
 input[type="password"]:disabled {
-  @apply border-none py-1 px-2 bg-white;
-  @apply rounded-lg block w-full mb-2;
+  @apply border py-1 px-2 bg-gray-100;
+  @apply rounded-lg block w-full mb-2 text-gray-500 font-normal;
 }
 
 button,

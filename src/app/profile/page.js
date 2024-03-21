@@ -21,6 +21,8 @@ export default function ProfilePage() {
   const [image, setImage] = useState("");
   const [profileFetched, setProfileFetched] = useState(false);
 
+  const [admin, setAdmin] = useState(false);
+
   useEffect(() => {
     if (status === "authenticated") {
       setUserName(session.data.user.name);
@@ -34,6 +36,7 @@ export default function ProfilePage() {
           setPostCode(data.postCode);
           setAddress(data.address);
           setIsAdmin(data.admin);
+          setAdmin(data.admin);
           setProfileFetched(true);
         });
       });
@@ -54,6 +57,7 @@ export default function ProfilePage() {
           postCode,
           street,
           address,
+          admin,
         }),
       });
 
@@ -143,6 +147,24 @@ export default function ProfilePage() {
               disabled={true}
               value={userEmail}
             />
+            {isAdmin && (
+              <div>
+                <label
+                  className="flex gap-1 items-center px-2 mb-1"
+                  htmlFor="adminCb"
+                >
+                  <input
+                    id="adminCb"
+                    type="checkbox"
+                    className=""
+                    value={1}
+                    checked={admin}
+                    onChange={(ev) => setAdmin(ev.target.checked)}
+                  />
+                  <span>Admin</span>
+                </label>
+              </div>
+            )}
             <input
               type="tel"
               placeholder="Phone number"
@@ -151,7 +173,7 @@ export default function ProfilePage() {
               onChange={(ev) => setPhone(ev.target.value)}
             />
             {/* Address below */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 mb-2">
               <input
                 style={{ margin: "0" }}
                 type="text"
