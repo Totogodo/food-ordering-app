@@ -5,17 +5,19 @@
 input[type="email"],
 input[type="tel"],
 input[type="text"],
+input[type="number"],
 input[type="password"] {
-  @apply border border-gray-400 py-1 px-2 bg-gray-100;
-  @apply rounded-lg block w-full my-2;
+  @apply border border-gray-400 py-1 px-2 bg-white;
+  @apply rounded-lg block w-full mb-2;
 }
 
 input[type="email"]:disabled,
 input[type="tel"]:disabled,
 input[type="text"]:disabled,
+input[type="number"]:disabled,
 input[type="password"]:disabled {
-  @apply border-none py-1 px-2 bg-gray-100;
-  @apply rounded-lg block w-full my-2;
+  @apply border-none py-1 px-2 bg-white;
+  @apply rounded-lg block w-full mb-2;
 }
 
 button,
