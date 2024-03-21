@@ -38,18 +38,19 @@ export default function MenuItemsPage() {
       </div>
       <div className="mt-8">
         <h2 className="text-center text-2xl">Edit Menu Items</h2>
-        <div className="">
+        <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-2">
           {menuItems.length > 0 &&
             menuItems.map((item) => (
               <Link
                 href={"/menu-items/edit/" + item._id}
-                className="mb-1 rounded-lg border p-2 flex w-full gap-2"
+                className="text-center mb-1 rounded-lg border-2 shadow-md p-2 flex-col w-full gap-2"
                 key={item._id}
               >
                 <div className="relative w-24 h-24">
-                  <Image src={item.image} alt="..." layout="fill" />
+                  <Image src={item.image} alt="..." width={100} height={100} />
                 </div>
-                {item.name}
+                <div className="block">{item.name}</div>
+                {item.description}
               </Link>
             ))}
         </div>

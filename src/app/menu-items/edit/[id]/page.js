@@ -1,22 +1,35 @@
 "use client";
 import { useProfile } from "@/components/UseProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserTabs from "@/components/layout/UserTabs";
+import MenuItemForm from "@/components/layout/MenuItemForm";
 import Link from "next/link";
 import Left from "@/components/icons/Left";
 import toast from "react-hot-toast";
-import MenuItemForm from "@/components/layout/MenuItemForm";
-import { redirect } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 
-export default function NewMenuItemPage() {
+export default function EditMenuItemPage() {
   const { loading, data } = useProfile();
+  const { id } = useParams();
+  const [menuItem, setMenuItem] = useState(null);
+
   const [redirectToItems, serRedirectToItems] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/menu-items").then((res) => {
+      res.json().then((items) => {
+        const item = items.find((i) => i._id === id);
+        setMenuItem(item);
+      });
+    });
+  }, []);
 
   async function handleFormSubmit(ev, data) {
     ev.preventDefault();
+    data = { ...data, _id: id };
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch("/api/menu-items", {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       });
@@ -52,7 +65,7 @@ export default function NewMenuItemPage() {
           <span>Show all menu items</span>
         </Link>
       </div>
-      <MenuItemForm menuItem={null} onSubmit={handleFormSubmit} />
+      <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
     </section>
   );
 }
