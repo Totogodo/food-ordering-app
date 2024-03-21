@@ -21,7 +21,7 @@ export async function GET() {
   return Response.json(await MenuItem.find());
 }
 
-export async function DELETE() {
+export async function DELETE(req) {
   mongoose.connect(process.env.MONGO_URL);
 
   const url = new URL(req.url);

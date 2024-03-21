@@ -7,6 +7,7 @@ import Link from "next/link";
 import Left from "@/components/icons/Left";
 import toast from "react-hot-toast";
 import { redirect, useParams } from "next/navigation";
+import { rejects } from "assert";
 
 export default function EditMenuItemPage() {
   const { loading, data } = useProfile();
@@ -45,6 +46,23 @@ export default function EditMenuItemPage() {
     serRedirectToItems(true);
   }
 
+  async function handleDelete() {
+    const promise = new Promise(async (resolve, reject) => {
+      const response = await fetch("/api/menu-items?_id=" + id, {
+        method: "DELETE",
+      });
+      response.ok ? resolve() : reject();
+    });
+
+    await toast.promise(promise, {
+      loading: "Deleting...",
+      success: "Deleted",
+      error: "Error",
+    });
+
+    serRedirectToItems(true);
+  }
+
   if (redirectToItems) {
     return redirect("/menu-items");
   }
@@ -66,8 +84,10 @@ export default function EditMenuItemPage() {
         </Link>
       </div>
       <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
-      <div className="max-w-lg">
-        <button type="button">Delete item</button>
+      <div className="max-w-lg mx-auto mt-4">
+        <button type="button" onClick={() => handleDelete()}>
+          Delete item
+        </button>
       </div>
     </section>
   );
