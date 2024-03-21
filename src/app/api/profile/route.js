@@ -6,13 +6,17 @@ import { getServerSession } from "next-auth";
 export async function PUT(req) {
   mongoose.connect(process.env.MONGO_URL);
   const data = await req.json();
-  const session = await getServerSession(authOptions);
-  const email = session.user.email;
+  const id = data._id;
 
-  console.log(data);
-
-  await User.updateOne({ email }, data);
-
+  let filter = {};
+  if (id) {
+    filter = { id };
+  } else {
+    const session = await getServerSession(authOptions);
+    const email = session.user.email;
+    filter = { email };
+  }
+  await User.updateOne(filter, data);
   return Response.json(true);
 }
 

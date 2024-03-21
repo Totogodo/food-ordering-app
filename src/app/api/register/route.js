@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { User } from "@/models/User";
+import { argon2 } from "argon2";
 
 const URL =
   "mongodb+srv://mzaiarnyi:7lwS4VNpC0G3bfIZ@cluster0.g8anloh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
