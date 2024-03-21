@@ -10,12 +10,15 @@ export async function PUT(req) {
 
   let filter = {};
   if (id) {
-    filter = { id };
+    filter = id;
+    await User.findByIdAndUpdate(filter, data);
+    return Response.json(true);
   } else {
     const session = await getServerSession(authOptions);
-    const email = session.user.email;
+    const email = session?.user?.email;
     filter = { email };
   }
+  console.log(data);
   await User.updateOne(filter, data);
   return Response.json(true);
 }
@@ -23,6 +26,6 @@ export async function PUT(req) {
 export async function GET() {
   mongoose.connect(process.env.MONGO_URL);
   const session = await getServerSession(authOptions);
-  const email = session.user.email;
+  const email = session?.user?.email;
   return Response.json(await User.findOne({ email }));
 }
