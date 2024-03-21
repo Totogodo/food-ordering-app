@@ -1,5 +1,5 @@
 import EditableImage from "@/components/layout/EditableImage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuItemPriceProps from "./MenuItemPriceProps";
 
 export default function MenuItemForm({ onSubmit, menuItem }) {
@@ -11,7 +11,19 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
   const [extraIngredient, setExtraIngredient] = useState(
     menuItem?.extraIngredient || []
   );
+  const [category, setCategory] = useState(menuItem?.category || "");
+  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    fetch("/api/categories").then((res) => {
+      res.json().then((categories) => {
+        setCategories(categories);
+        if (!menuItem?.category && categories.length > 0) {
+          setCategory(categories[0]);
+        }
+      });
+    });
+  }, []);
   return (
     <form
       onSubmit={(ev) =>
@@ -22,6 +34,7 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
           basePrice,
           sizes,
           extraIngredient,
+          category,
         })
       }
     >
@@ -48,6 +61,20 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
             onChange={(ev) => setBasePrice(ev.target.value)}
             type="text"
           />
+          <label>Categories:</label>
+          <select
+            value={category}
+            onChange={(ev) => {
+              setCategory(ev.target.value);
+            }}
+          >
+            {categories?.length > 0 &&
+              categories.map((c) => (
+                <option value={c._id} key={c._id}>
+                  {c.name}
+                </option>
+              ))}
+          </select>
           <MenuItemPriceProps
             name={"Sizes"}
             addLabel={"Add size"}
