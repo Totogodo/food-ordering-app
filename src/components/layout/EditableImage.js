@@ -1,4 +1,5 @@
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function EditableImage({ link, setLink }) {
   async function handleFileChange(ev) {
@@ -18,6 +19,7 @@ export default function EditableImage({ link, setLink }) {
         const link = await response.json();
         setLink(link);
       });
+      console.log("🚀 ~ uploadingPromise ~ link:", link);
 
       await toast.promise(uploadingPromise, {
         loading: "Uploading...",
@@ -37,6 +39,12 @@ export default function EditableImage({ link, setLink }) {
           alt={"avatar"}
         />
       )}
+      {!link && (
+        <div className="bg-gray-200 p-4 text-gray-600 rounded-lg aspect-square text-center">
+          No image
+        </div>
+      )}
+
       <label>
         <input type="file" className="hidden" onChange={handleFileChange} />
         <span className="border-gray-300 text-center text-gray-700 border rounded-lg py-1 px-2 mt-2 block text-xs cursor-pointer">

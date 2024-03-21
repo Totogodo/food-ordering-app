@@ -91,13 +91,14 @@ export default function CategoriesPage() {
       <div>
         <h2 className="mt-8 text-sm">Edit Category:</h2>
         {allCategories?.length > 0 &&
-          allCategories.map((c) => (
+          allCategories.map((c, i) => (
             <button
+              key={i}
               onClick={() => {
                 setEditedCategory(c);
                 setCategoryName(c.name);
               }}
-              className="bg-gray-200 rounded-lg py-1 px-2 mb-2 flex gap-2 cursor-pointer"
+              className="mb-2"
             >
               <span>{c.name}</span>
             </button>
