@@ -77,7 +77,7 @@ export default function CategoriesPage() {
     return "Not an admin";
   }
   return (
-    <section className="mt-8 max-w-lg mx-auto">
+    <section className="mt-8 max-w-xl mx-auto">
       <UserTabs isAdmin={profileData.admin} />
       <form className="mt-8" onSubmit={handleCategorySubmit}>
         <div className="flex gap-2 items-end">
