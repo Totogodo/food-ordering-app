@@ -4,9 +4,15 @@ import Xmark from "@/components/icons/Xmark";
 
 export default function CartProduct({ product, onRemove }) {
   return (
-    <div className="flex   items-center gap-4 border-b py-4">
+    <div className="flex items-center gap-4 border-b py-4">
       <div className="w-24">
-        <Image width={240} height={240} src={product.product.image} alt={""} />
+        <Image
+          width={240}
+          height={240}
+          src={product.product.image}
+          alt={""}
+          className="rounded-lg"
+        />
       </div>
       <div className="grow">
         <h3 className="font-semibold">{product.product.name}</h3>

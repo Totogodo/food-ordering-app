@@ -29,12 +29,7 @@ export async function GET() {
   if (mongoose.connection.readyState !== 1) {
     await mongoose.connect(process.env.MONGO_URL);
   }
-
-  if (await isAdmin()) {
-    return Response.json(await MenuItem.find());
-  } else {
-    return Response.json({});
-  }
+  return Response.json(await MenuItem.find());
 }
 
 export async function DELETE(req) {

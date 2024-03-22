@@ -38,12 +38,12 @@ export default function OrdersPage() {
         {orders?.length > 0 &&
           orders.map((order) => (
             <Link href={"/orders/" + order._id} key={order._id}>
-              <div className="bg-gray-100 mb-2 p-4 rounded-lg grid grid-cols-3 items-center">
+              <div className="bg-gray-100 mb-2 p-4 rounded-lg grid grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 items-center">
                 <div className="text-gray-500">{order.userEmail}</div>
                 <div className="text-xs ">
                   {order.cartProducts.map((p) => p.product.name).join(", ")}
                 </div>
-                <div className="flex gap-2 items-center justify-end">
+                <div className="flex gap-2 items-center sm:justify-end">
                   <span
                     className={
                       (!order.paid

@@ -17,7 +17,7 @@ function HomeMenu() {
   return (
     <section className="">
       <SectionHeaders subHeader={"Check Out"} mainHeader={"Our Best Seller"} />
-      <div className="grid grid-cols-3 gap-4 my-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-4 sm:max-w-3xl max-w-xs mx-auto">
         {bestSellers?.length > 0 &&
           bestSellers.map((item) => <Menuitem {...item} />)}
       </div>

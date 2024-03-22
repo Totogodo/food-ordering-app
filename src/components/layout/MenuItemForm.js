@@ -38,7 +38,7 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
         })
       }
     >
-      <div className="grid grid-cols-3 gap-4 items-start">
+      <div className="sm:grid grid-cols-3 gap-4 items-start">
         <div className="col-span-1">
           <EditableImage link={image} setLink={setImage} />
         </div>

@@ -108,7 +108,7 @@ export default function ProfilePage() {
     <section className="mt-8">
       <UserTabs isAdmin={isAdmin} />
       <div className="max-w-sm mx-auto">
-        <div className="flex gap-2">
+        <div className="sm:flex gap-2">
           <div>
             <div>
               {image && (

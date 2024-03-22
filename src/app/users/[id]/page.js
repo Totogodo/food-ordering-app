@@ -105,9 +105,9 @@ export default function EditUserPage() {
   }
 
   return (
-    <section className="mt-8 max-wxl mx-auto">
+    <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={data.admin} />
-      <div className="flex gap-2">
+      <div className="sm:flex gap-2 ">
         <div>
           <div>
             {image && (

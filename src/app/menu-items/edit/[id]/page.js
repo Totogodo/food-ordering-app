@@ -75,7 +75,7 @@ export default function EditMenuItemPage() {
     return "Not an admin.";
   }
   return (
-    <section className="mt-8 max-w-lg mx-auto">
+    <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={data.admin} />
       <div className="py-6">
         <Link href={"/menu-items"} className="button">
