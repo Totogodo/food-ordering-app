@@ -34,7 +34,7 @@ export default function OrderPage() {
   }
 
   return (
-    <section className="max-w-2xl">
+    <section className="max-w-2xl mx-auto">
       <div className="text-center">
         <SectionHeaders mainHeader="Your order" />
         <div>

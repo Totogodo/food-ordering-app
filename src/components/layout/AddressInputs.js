@@ -3,7 +3,7 @@ export default function AddresInputs({
   setAddressProp,
   disabled = false,
 }) {
-  const { phone, street, postCode, address } = addressProps;
+  const { phone = "", street = "", postCode = "", address = "" } = addressProps;
   return (
     <>
       <label className="text-sm text-gray-600">Phone number</label>

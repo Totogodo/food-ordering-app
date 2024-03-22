@@ -27,7 +27,7 @@ export default function MenuPage() {
             <div className="py-6">
               <SectionHeaders mainHeader={c.name} />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="sm:grid md:grid-cols-3 sm:grid-cols-2 gap-4 max-w-sm sm:max-w-3xl mx-auto">
               {menuItems
                 ?.filter((item) => item.category === c._id)
                 .map((item) => (

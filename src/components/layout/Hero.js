@@ -4,7 +4,7 @@ import Right from "../icons/Right";
 function Hero() {
   return (
     <section className="md:grid grid-cols-2 my-4">
-      <div className="py-20 px-4">
+      <div className="py-4 md:py-20 px-4">
         <h1 className="text-primary text-4xl font-semibold">
           Smak Tradycji w Nowoczesnej Odsłonie
         </h1>
