@@ -84,6 +84,15 @@ export default function CartPage() {
   for (const p of cartProducts) {
     subTotal += cartTotalPrice(p);
   }
+
+  if (cartProducts?.length === 0) {
+    return (
+      <section className="mt-8 text-center">
+        <SectionHeaders mainHeader={"Cart"} />
+        <p className="mt-4">Your shopping cart</p>
+      </section>
+    );
+  }
   return (
     <section className="mt-8">
       <div className="text-center">
