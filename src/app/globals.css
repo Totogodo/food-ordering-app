@@ -41,3 +41,7 @@ div.tabs > * {
 div.tabs > *.active {
   @apply border border-primary px-4 rounded-full bg-primary text-light;
 }
+
+.flying-button-parent button {
+  @apply bg-primary border-0 text-light;
+}

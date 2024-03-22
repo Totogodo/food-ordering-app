@@ -2,7 +2,7 @@ import { CartContext } from "@/components/AppContext";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 import Image from "next/image";
 import { useContext, useState } from "react";
-// import FlyingButton from "react-flying-item";
+import FlyingButton from "react-flying-item";
 import toast from "react-hot-toast";
 
 export default function MenuItem(menuItem) {
@@ -36,13 +36,13 @@ export default function MenuItem(menuItem) {
     }
   }
 
-  let selectedPrice = basePrice;
+  let selectedPrice = Number(basePrice);
   if (selectedSize) {
-    selectedPrice += selectedSize.price;
+    selectedPrice += Number(selectedSize.price);
   }
   if (selectedExtras?.length > 0) {
     for (const extra of selectedExtras) {
-      selectedPrice += extra.price;
+      selectedPrice += Number(extra.price);
     }
   }
 
@@ -86,7 +86,7 @@ export default function MenuItem(menuItem) {
                         checked={selectedSize?.name === size.name}
                         name="size"
                       />
-                      {size.name} {basePrice + size.price}zł
+                      {size.name} {Number(basePrice) + Number(size.price)}zł
                     </label>
                   ))}
                 </div>
@@ -112,14 +112,14 @@ export default function MenuItem(menuItem) {
                   ))}
                 </div>
               )}
-              {/* <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
+              <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
                 <div
                   className="primary sticky bottom-2"
                   onClick={handleAddToCartButtonClick}
                 >
                   Add to cart ${selectedPrice}
                 </div>
-              </FlyingButton> */}
+              </FlyingButton>
               <button className="mt-2" onClick={() => setShowPopup(false)}>
                 Cancel
               </button>
