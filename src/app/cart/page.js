@@ -15,11 +15,32 @@ export default function CartPage() {
 
   useEffect(() => {
     if (profileData?.postCode) {
-      const { phone, street, postCode, address } = profileData;
+      const {
+        phone = "",
+        street = "",
+        postCode = "",
+        address = "",
+      } = profileData;
       const addressFormProfile = { phone, street, postCode, address };
       setAddress(addressFormProfile);
     }
   }, [profileData]);
+
+  async function proceedToCheckout(ev) {
+    ev.preventDefault();
+    // address and shoping cart products
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        address,
+        cartProducts,
+      }),
+    });
+    const link = await response.json();
+    window.location = link;
+    // redirect to stripe
+  }
 
   function handleAddresChange(propName, value) {
     setAddress((prevAddress) => ({ ...prevAddress, [propName]: value }));
@@ -38,9 +59,9 @@ export default function CartPage() {
     return price;
   }
 
-  let total = 0;
+  let subTotal = 0;
   for (const p of cartProducts) {
-    total += cartTotalPrice(p);
+    subTotal += cartTotalPrice(p);
   }
   return (
     <section className="mt-8">
@@ -98,20 +119,30 @@ export default function CartPage() {
                 </div>
               </div>
             ))}
-          <div className="py-2 text-right pr-14">
-            <span className="text-gray-500">Subtotal: </span>
-            <span className="text-lg font-semibold">{total}zł</span>
+          <div className="py-2 flex justify-end items-center pr-14">
+            <div className="text-gray-500">
+              Subtotal: <br />
+              Delivery: <br />
+              Total:
+            </div>
+            <div className=" font-semibold">
+              {subTotal}zł
+              <br />
+              5zł
+              <br />
+              {subTotal + 5}zł
+            </div>
           </div>
         </div>
         <div>
           <div className="bg-gray-200 p-4 rounded-lg">
             <h2>Checkout</h2>
-            <form>
+            <form onSubmit={proceedToCheckout}>
               <AddressInputs
                 addressProps={address}
                 setAddressProp={handleAddresChange}
               />
-              <button type="submit">Pay ${total}</button>
+              <button type="submit">Pay ${subTotal}</button>
             </form>
           </div>
         </div>
