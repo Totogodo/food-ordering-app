@@ -14,6 +14,14 @@ export default function CartPage() {
   const { data: profileData } = useProfile();
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.href.includes("canceled=1")) {
+        toast.error("Payment failed");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (profileData?.postCode) {
       const {
         phone = "",
@@ -29,16 +37,29 @@ export default function CartPage() {
   async function proceedToCheckout(ev) {
     ev.preventDefault();
     // address and shoping cart products
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        address,
-        cartProducts,
-      }),
+    const promise = new Promise(async (resolve, reject) => {
+      await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address,
+          cartProducts,
+        }),
+      }).then(async (response) => {
+        if (response.ok) {
+          resolve();
+          window.location = await response.json();
+        } else {
+          reject();
+        }
+      });
     });
-    const link = await response.json();
-    window.location = link;
+
+    toast.promise(promise, {
+      loading: "Preparing your order...",
+      success: "Redirecting to payment",
+      error: "Something went wron. Please try again",
+    });
     // redirect to stripe
   }
 

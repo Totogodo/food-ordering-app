@@ -55,13 +55,17 @@ export async function POST(req) {
     });
   }
 
-  // process.env.NEXTAUTH_URL + "orders/" + orderDoc._id.toString() + "?clear-cart=1",
+  // process.env.NEXTAUTH_URL + "/orders/" + orderDoc._id.toString() + "?clear-cart=1",
   // process.env.NEXTAUTH_URL + "cart?canceled=1",
   const stripeSession = await stripe.checkout.sessions.create({
     line_items: stripeLineItems,
     mode: "payment",
     customer_email: userEmail,
-    success_url: process.env.NEXTAUTH_URL + "/cart?success=1",
+    success_url:
+      process.env.NEXTAUTH_URL +
+      "/orders/" +
+      orderDoc._id.toString() +
+      "?clear-cart=1",
     cancel_url: process.env.NEXTAUTH_URL + "/cart?canceled=1",
     metadata: { orderId: orderDoc._id.toString() },
     payment_intent_data: {
