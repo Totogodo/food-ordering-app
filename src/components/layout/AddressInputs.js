@@ -1,9 +1,14 @@
-export default function AddresInputs({ addressProps, setAddressProp }) {
+export default function AddresInputs({
+  addressProps,
+  setAddressProp,
+  disabled = false,
+}) {
   const { phone, street, postCode, address } = addressProps;
   return (
     <>
       <label className="text-sm text-gray-600">Phone number</label>
       <input
+        disabled={disabled}
         type="tel"
         placeholder="Phone number"
         className="font-semibold text-gray-600"
@@ -26,6 +31,7 @@ export default function AddresInputs({ addressProps, setAddressProp }) {
         <div>
           <label className="text-sm text-gray-600">Postal code</label>
           <input
+            disabled={disabled}
             style={{ margin: "0" }}
             type="text"
             placeholder="Postal code"
@@ -39,6 +45,7 @@ export default function AddresInputs({ addressProps, setAddressProp }) {
       </div>
       <label className="text-sm text-gray-600">Street</label>
       <input
+        disabled={disabled}
         type="text"
         placeholder="Street"
         className="font-semibold text-gray-600"
@@ -47,6 +54,7 @@ export default function AddresInputs({ addressProps, setAddressProp }) {
       />
       <label className="text-sm text-gray-600">Posession</label>
       <input
+        disabled={disabled}
         className="font-semibold text-gray-600"
         type="text"
         placeholder="Address"
