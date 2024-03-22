@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <Hero />
       <HomeMenu />
-      <section className="text-center mb-4">
+      <section className="text-center mb-4" id="about">
         <SectionHeaders subHeader={"Our Story"} mainHeader={"About Us"} />
         <div className="text-secondary max-w-md mx-auto mt-4 flex flex-col gap-3">
           <p>
@@ -27,7 +27,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-      <section className="text-center my-8">
+      <section className="text-center my-8" id="contact">
         <SectionHeaders
           subHeader={"Don`t hesitate"}
           mainHeader={"Contuct us"}
