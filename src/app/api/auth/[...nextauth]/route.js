@@ -1,5 +1,5 @@
 const argon2 = require("argon2");
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 import NextAuth, { getServerSession } from "next-auth";
 import { User } from "@/models/User";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
@@ -47,7 +47,7 @@ export async function isAdmin() {
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
-  const userInfo = User.findOne({ email: userEmail });
+  const userInfo = await User.findOne({ email: userEmail });
 
   if (!userInfo) {
     return false;
