@@ -9,26 +9,22 @@ import toast from "react-hot-toast";
 export default function OrdersPage() {
   const { loading, data: profile } = useProfile();
   const [orders, setOrders] = useState();
-  console.log("🚀 ~ OrdersPage ~ orders:", orders);
 
   useEffect(() => {
     const promise = new Promise(async (resolve, reject) => {
       fetch("/api/orders").then((res) => {
         res.json().then((orders) => {
-          console.log("🚀 ~ res.json ~ orders:", orders);
           setOrders(orders.reverse());
           res.ok ? resolve() : reject();
         });
       });
-    });
+    }, []);
     toast.promise(promise, {
       loading: "Loading orders...",
       success: "Orders loaded",
       error: "Error",
     });
   }, []);
-
-  async function fetchOrders() {}
 
   if (loading) {
     return "Loading...";

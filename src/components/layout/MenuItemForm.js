@@ -23,7 +23,7 @@ export default function MenuItemForm({ onSubmit, menuItem }) {
         }
       });
     });
-  }, []);
+  }, [menuItem?.category]);
   return (
     <form
       onSubmit={(ev) =>
