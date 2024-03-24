@@ -1,4 +1,5 @@
 import Image from "next/image";
+md;
 import Right from "../icons/Right";
 
 function Hero() {

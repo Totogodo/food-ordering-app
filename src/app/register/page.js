@@ -2,6 +2,7 @@
 import { use, useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -70,7 +71,13 @@ export default function RegisterPage() {
           onClick={() => signIn("google", { callbackUrl: "/" })}
           className="flex items-center gap-4  justify-center"
         >
-          <img className="max-w-6" src="/google.png" alt="logo google" />
+          <Image
+            className="max-w-6"
+            width={64}
+            height={64}
+            src="/google.png"
+            alt="logo google"
+          />
           Loging with Google
         </button>
         <div className="text-center text-sm text-secondary my-2">
