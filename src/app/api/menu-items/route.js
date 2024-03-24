@@ -2,7 +2,6 @@ import { MenuItem } from "@/models/Menu-Items";
 import mongoose from "mongoose";
 import { isAdmin } from "@/libs/isAdmin";
 
-console.log(isAdmin);
 export async function POST(req) {
   if (mongoose.connection.readyState !== 1) {
     await mongoose.connect(process.env.MONGO_URL);
