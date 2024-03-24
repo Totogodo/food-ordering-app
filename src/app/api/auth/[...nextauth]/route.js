@@ -15,6 +15,7 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+
     CredentialsProvider({
       name: "Credentials",
       id: "credentials",
@@ -28,7 +29,6 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials;
-        mongoose.connect(process.env.MONGO_URL);
 
         const user = await User.findOne({ email });
         const isValid = user && (await argon2.verify(user.password, password));

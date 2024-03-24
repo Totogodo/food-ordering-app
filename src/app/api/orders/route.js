@@ -9,10 +9,13 @@ export async function GET(req) {
 
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
-  let admin = isAdmin();
+  console.log("🚀 ~ GET ~ userEmail:", userEmail);
+  const admin = await isAdmin();
+  console.log("🚀 ~ GET ~ admin:", admin);
 
   const url = new URL(req.url);
   const _id = url.searchParams.get("_id");
+  console.log("🚀 ~ GET ~ _id:", _id);
   if (_id) {
     return Response.json(await Order.findById(_id));
   }

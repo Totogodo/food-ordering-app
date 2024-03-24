@@ -29,14 +29,19 @@ export async function POST(req) {
         (size) => size._id.toString() === cartProduct.size._id.toString()
       );
       productPrice += Number(size.price);
+      console.log("🚀 ~ POST ~ productPrice:", productPrice);
     }
     if (cartProduct.extras?.length > 0) {
       for (const cartProductExtraThing of cartProduct.extras) {
-        const productExtras = productInfo.extraIngredientPrices;
+        const productExtras = productInfo.extraIngredient;
+        console.log("🚀 ~ POST ~ productInfo:", productInfo);
+        console.log("🚀 ~ POST ~ productExtras:", productExtras);
         const extraThingInfo = productExtras.find(
           (extra) =>
             extra._id.toString() === cartProductExtraThing._id.toString()
         );
+        console.log("🚀 ~ POST ~ extraThingInfo:", extraThingInfo);
+        console.log("🚀 ~ POST ~ extraThingInfo:", extraThingInfo);
         productPrice += Number(extraThingInfo.price);
       }
     }
