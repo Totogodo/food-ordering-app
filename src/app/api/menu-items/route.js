@@ -1,9 +1,8 @@
 import { MenuItem } from "@/models/Menu-Items";
 import mongoose from "mongoose";
-import { authOptions, isAdmin } from "@/app/api/auth/[...nextauth]/route";
+import { isAdmin } from "@/libs/isAdmin";
 
-// let admin = await isAdmin();
-
+console.log(isAdmin);
 export async function POST(req) {
   if (mongoose.connection.readyState !== 1) {
     await mongoose.connect(process.env.MONGO_URL);
@@ -18,11 +17,12 @@ export async function PUT(req) {
   if (mongoose.connection.readyState !== 1) {
     await mongoose.connect(process.env.MONGO_URL);
   }
+  if (isAdmin()) {
+    const { _id, ...data } = await req.json();
+    await MenuItem.findByIdAndUpdate(_id, data);
 
-  const { _id, ...data } = await req.json();
-  await MenuItem.findByIdAndUpdate(_id, data);
-
-  return Response.json(true);
+    return Response.json(true);
+  }
 }
 
 export async function GET() {
@@ -39,7 +39,10 @@ export async function DELETE(req) {
 
   const url = new URL(req.url);
   const _id = url.searchParams.get("_id");
-  await MenuItem.deleteOne({ _id });
 
-  return Response.json(true);
+  if (isAdmin()) {
+    await MenuItem.deleteOne({ _id });
+
+    return Response.json(true);
+  }
 }
